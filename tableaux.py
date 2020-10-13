@@ -54,7 +54,6 @@ def StringtoTree(A):
 			del pila[-1]
 			del pila[-1]
 			pila.append(formulaAux)
-	print("Pila es:", pila, "\n pila[-1 es: ", pila[-1])
 	return pila[-1]
 
 ##############################################################################
@@ -108,7 +107,7 @@ def Tableaux(f):
 	global listaHojas
 	global listaInterpsVerdaderas
 
-	A = string2Tree(f)
+	A = StringtoTree(f)
 	listaHojas = [[A]]
 
 	return listaInterpsVerdaderas
