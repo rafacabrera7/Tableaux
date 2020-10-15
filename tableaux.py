@@ -59,10 +59,7 @@ def imprime_hoja(H):
 	return cadena + "}"
 
 def par_complementario(l):
-	# Esta función determina si una lista de solo literales
-	# contiene un par complementario
-	# Input: l, una lista de literales
-	# Output: True/False
+
 	return False
 
 def es_literal(f):
