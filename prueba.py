@@ -32,6 +32,24 @@ def Inorder(f):
 	else:
 		return "(" + Inorder(f.left) + f.label + Inorder(f.right) + ")"
 
+
+def inorder_to_tree(inorder):
+	if len(inorder) == 1:
+		return Tree(inorder[0], None, None)
+	elif inorder[0] == '-':
+		return Tree(inorder[0], None, inorder_to_tree(inorder[1:]))
+	elif inorder[0] == "(":
+		counter = 0 #Contador de parentesis
+		for i in range(1, len(inorder)):
+			if inorder[i] == "(":
+				counter += 1
+			elif inorder[i] == ")":
+				counter -=1
+			elif (inorder[i] in ['Y', 'O', '>', '=']) and (counter == 0):
+				return Tree(inorder[i], inorder_to_tree(inorder[1:i]), inorder_to_tree(inorder[i + 1:-1]))
+	else:
+		return -1
+
 def complemento(l):
     if l.label in letrasProposicionales:
         return Tree('-', None, l)
@@ -105,7 +123,47 @@ b = [Tree('q',None,None),Tree('-',None,Tree('p',None,None)),Tree('-',None,Tree('
 c = [Tree('-',None,Tree('p',None,None)),Tree('p',None,None),Tree('-',None,Tree('q',None,None)),Tree('q',None,None)]
 d = [Tree('p',None,None),Tree('q',None,None),Tree('O',Tree('p',None,None),Tree('q',None,None)),Tree('-',None,Tree('q',None,None)),Tree('-',None,Tree('p',None,None))]
 
-print(no_literales(a))
-print(no_literales(b))
-print(no_literales(c))
-print(no_literales(d))
+def clasifica(f):
+	if f.label == '-':
+		if f.right.label == '-':
+			return '1ALFA'
+		elif f.right.label == 'O':
+			return '3ALFA'
+		elif f.right.label == '>':
+			return '4ALFA'
+		elif f.right.label == 'Y':
+			return '1BETA'
+	elif f.label == 'Y':
+		return '2ALFA'
+	elif f.label == 'O':
+		return '2BETA'
+	elif f.label == '>':
+		return '3BETA'
+
+prueba1 = inorder_to_tree('--(-(pOq)Y-(r>s))')
+prueba2 = inorder_to_tree('((-(pOq))Y(-(r>s)))')
+prueba3 = inorder_to_tree('-((-(r>s))Oq)')
+prueba4 = inorder_to_tree('-(r>-(pOq))')
+prueba5 = inorder_to_tree('-(pY(r>s))')
+prueba6 = inorder_to_tree('(-(pYq)O(r>s))')
+prueba7 = inorder_to_tree('(r>(sOq))')
+
+a = Tree('O',Tree('-',None,Tree('s',None,None)),Tree('Y',Tree('t',None,None),Tree('>',Tree('u',None,None),Tree('v',None,None))))
+b = Tree('-',None,Tree('>',Tree('-',None,Tree('a',None,None)),Tree('Y',Tree('-',None,Tree('c',None,None)),Tree('b',None,None))))
+c = Tree('-',None,Tree('O',Tree('>',Tree('m',None,None),Tree('n',None,None)),Tree('-',None,Tree('l',None,None))))
+d = Tree('-',None,Tree('-',None,Tree('-',None,Tree('O',Tree('p',None,None),Tree('q',None,None)))))
+e = Tree('Y',Tree('>',Tree('x',None,None),Tree('z',None,None)),Tree('O',Tree('-',None,Tree('w',None,None)),Tree('-',None,Tree('y',None,None))))
+f = Tree('-',None,Tree('pq>',None,None))
+g = Tree('-',None,Tree('Y',Tree('-',None,Tree('a',None,None)),Tree('-',None,Tree('b',None,None))))
+h = Tree('>',Tree('Y',Tree('p',None,None),Tree('>',Tree('p',None,None),Tree('q',None,None))),Tree('q',None,None))
+
+
+
+print(clasifica(a))
+print(clasifica(b))
+print(clasifica(c))
+print(clasifica(d))
+print(clasifica(e))
+print(clasifica(f))
+print(clasifica(g))
+print(clasifica(h))
