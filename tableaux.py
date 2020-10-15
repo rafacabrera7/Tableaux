@@ -40,8 +40,21 @@ def StringtoTree(A):
 
 	# OJO: DEBE INCLUIR SU CÓDIGO DE STRING2TREE EN ESTA PARTE!!!!!
 
-	p = letrasProposicionales[0] # ELIMINE ESTA LINEA LUEGO DE INCLUIR EL CODIGO DE STRING2TREE
-	return Tree(p, None, None) # ELIMINE ESTA LINEA LUEGO DE INCLUIR EL CODIGO DE STRING2TREE
+	conectivos = ['O','Y','>']
+	pila = []
+	for c in A:
+		if c in letrasProposicionales:
+			pila.append(Tree(c,None,None))
+		elif c == "-":
+			formulaAux = Tree(c,None,pila[-1])
+			del pila[-1]
+			pila.append(formulaAux)
+		elif c in conectivos:
+			formulaAux = Tree(c, pila[-1], pila[-2])
+			del pila[-1]
+			del pila[-1]
+			pila.append(formulaAux)
+	return pila[-1]
 
 ##############################################################################
 # Definición de funciones de tableaux
@@ -91,7 +104,7 @@ def Tableaux(f):
 	global listaHojas
 	global listaInterpsVerdaderas
 
-	A = string2Tree(f)
+	A = StringtoTree(f)
 	listaHojas = [[A]]
 
 	return listaInterpsVerdaderas
