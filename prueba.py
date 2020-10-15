@@ -32,14 +32,13 @@ def Inorder(f):
 	else:
 		return "(" + Inorder(f.left) + f.label + Inorder(f.right) + ")"
 
+def complemento(l):
+    if l.label in letrasProposicionales:
+        return Tree('-', None, l)
+    else:
+        return l.right
 
 def par_complementario(l):
-    def complemento(l):
-        if l.label in letrasProposicionales:
-            return Tree('-', None, l)
-        else:
-            return l.right
-
     complementos = []
     valor = False
     for x in l:
@@ -59,4 +58,33 @@ prueba3 = [Tree('p', None, None), Tree('q', None, None), Tree('-', None, Tree('p
 
 a = [Tree('b',None,None), Tree('-',None,Tree('a',None,None)), Tree('-',None,Tree('c',None,None)), Tree('a',None,None), Tree('d',None,None)]
 b = [Tree('-',None,Tree('a',None,None)), Tree('b',None,None), Tree('-',None,Tree('c',None,None)), Tree('d',None,None)]
-print(par_complementario(prueba3))
+c = [Tree('a',None,None), Tree('b',None,None), Tree('-',None,Tree('c',None,None)), Tree('a',None,None)]
+d = [Tree('-',None,Tree('q',None,None)), Tree('-',None,Tree('p',None,None)), Tree('q',None,None), Tree('-',None,Tree('r',None,None))]
+
+def es_literal(f):
+	# Esta función determina si el árbol f es un literal
+	# Input: f, una fórmula como árbol
+	# Output: True/False
+
+	if f.label in letrasProposicionales:
+		return True
+
+	if f.label == '-' and f.right.label in letrasProposicionales:
+		return True
+
+	return False
+
+prueba1 = Tree('a', None, None)
+prueba2 = Tree('-', None, Tree('a', None, None))
+prueba3 = Tree('-', None, Tree('-', None, Tree('a', None, None)))
+prueba4 = Tree('-', None, Tree('Y', Tree('p',None, None), Tree('q', None, None)))
+
+a = Tree('-',None,Tree('Y',Tree('p',None,None),Tree('q',None,None)))
+b = Tree('O',Tree('k',None,None),Tree('Y',Tree('i',None,None),Tree('j',None,None)))
+c = Tree('-',None,Tree('p',None,None))
+d = Tree('p',None,None)
+
+print(es_literal(a))
+print(es_literal(b))
+print(es_literal(c))
+print(es_literal(d))
