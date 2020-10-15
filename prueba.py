@@ -84,7 +84,28 @@ b = Tree('O',Tree('k',None,None),Tree('Y',Tree('i',None,None),Tree('j',None,None
 c = Tree('-',None,Tree('p',None,None))
 d = Tree('p',None,None)
 
-print(es_literal(a))
-print(es_literal(b))
-print(es_literal(c))
-print(es_literal(d))
+def no_literales(l):
+	# Esta función determina si una lista de fórmulas contiene
+	# solo literales
+	# Input: l, una lista de fórmulas como árboles
+	# Output: None/f, tal que f no es literal
+	for x in l:
+		if not es_literal(x):
+			return True
+
+	return False
+
+prueba1 = [Tree('p',None,None), Tree('q',None,None)]
+prueba2 = [Tree('-',None,Tree('p',None,None)), Tree('q',None,None)]
+prueba3 = [Tree('p',None,None), Tree('-', None, Tree('-',None,Tree('q',None,None)))]
+prueba4 = [Tree('-', None, Tree('-',None,Tree('p',None,None))), Tree('-', None, Tree('Y', Tree('p',None, None), Tree('q', None, None)))]
+
+a = [Tree('-',None,Tree('p',None,None)),Tree('q',None,None),Tree('-',None,Tree('p',None,None)),Tree('r',None,None),Tree('-',None,Tree('q',None,None)),Tree('p',None,None)]
+b = [Tree('q',None,None),Tree('-',None,Tree('p',None,None)),Tree('-',None,Tree('-',None,Tree('p',None,None))),Tree('-',None,Tree('q',None,None))]
+c = [Tree('-',None,Tree('p',None,None)),Tree('p',None,None),Tree('-',None,Tree('q',None,None)),Tree('q',None,None)]
+d = [Tree('p',None,None),Tree('q',None,None),Tree('O',Tree('p',None,None),Tree('q',None,None)),Tree('-',None,Tree('q',None,None)),Tree('-',None,Tree('p',None,None))]
+
+print(no_literales(a))
+print(no_literales(b))
+print(no_literales(c))
+print(no_literales(d))

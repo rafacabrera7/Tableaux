@@ -103,13 +103,17 @@ def es_literal(f):
 		return True
 
 	return False
-	
+
 
 def no_literales(l):
 	# Esta función determina si una lista de fórmulas contiene
 	# solo literales
 	# Input: l, una lista de fórmulas como árboles
 	# Output: None/f, tal que f no es literal
+	for x in l:
+		if not es_literal(x):
+			return True
+
 	return False
 
 def clasifica_y_extiende(f):
