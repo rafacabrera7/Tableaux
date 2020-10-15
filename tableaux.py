@@ -71,9 +71,26 @@ def imprime_hoja(H):
 		cadena += Inorder(f)
 	return cadena + "}"
 
-def par_complementario(l):
+def complemento(l):
+    if l.label in letrasProposicionales:
+        return Tree('-', None, l)
+    else:
+        return l.right
 
-	return False
+
+def par_complementario(l):
+    complementos = []
+    valor = False
+    for x in l:
+        complementos.append(complemento(x))
+
+    for i in l:
+        for c in complementos:
+            if i.label == c.label and i.right == c.right:
+                valor = True
+
+    return valor
+
 
 def es_literal(f):
 	# Esta función determina si el árbol f es un literal
