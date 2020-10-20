@@ -123,7 +123,7 @@ b = [Tree('q',None,None),Tree('-',None,Tree('p',None,None)),Tree('-',None,Tree('
 c = [Tree('-',None,Tree('p',None,None)),Tree('p',None,None),Tree('-',None,Tree('q',None,None)),Tree('q',None,None)]
 d = [Tree('p',None,None),Tree('q',None,None),Tree('O',Tree('p',None,None),Tree('q',None,None)),Tree('-',None,Tree('q',None,None)),Tree('-',None,Tree('p',None,None))]
 
-def clasifica(f):
+def clasificacion(f):
 	if f.label == '-':
 		if f.right.label == '-':
 			return '1ALFA'
@@ -159,11 +159,30 @@ h = Tree('>',Tree('Y',Tree('p',None,None),Tree('>',Tree('p',None,None),Tree('q',
 
 
 
-print(clasifica(a))
-print(clasifica(b))
-print(clasifica(c))
-print(clasifica(d))
-print(clasifica(e))
-print(clasifica(f))
-print(clasifica(g))
-print(clasifica(h))
+
+def clasifica_y_extiende(f, h):
+	# Extiende listaHojas de acuerdo a la regla respectiva
+	# Input: f, una fórmula como árbol
+	# 		 h, una hoja (lista de fórmulas como árboles)
+	# Output: no tiene output, pues modifica la variable global listaHojas
+
+	global listaHojas
+
+	print("Formula:", Inorder(f))
+	print("Hoja:", imprime_hoja(h))
+
+	assert(f in h), "La formula no esta en la lista!"
+
+	clase = clasificacion(f)
+	print("Clasificada como:", clase)
+
+
+f = inorder_to_tree('(pYq)')
+
+h = [f, inorder_to_tree('-q')]
+
+listaHojas = [h]
+
+clasifica_y_extiende(f, h)
+
+imprime_listaHojas(listaHojas)

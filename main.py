@@ -6,7 +6,7 @@
 
 # Importando la libreria tableaux
 import tableaux as T
-#hola
+
 # Fórmula (en notación polaca inversa)
 # para obtener uno de sus tableaux
 formula = "pq>-rO"
